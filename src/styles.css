@@ -1,1 +1,21 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* You can add global styles to this file, and also import other style files */
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+.success{
+    color: green;
+    font-size: 20px;
+}
+.top-40{
+  margin-top: 40px;
+}
+.bot-20{
+  margin-bottom: 20px;
+}

@@ -1,0 +1,79 @@
+<h1>Clientes</h1>
+<hr>
+
+<p-growl [value]="msgs"></p-growl>
+<!-- <p-messages [(value)]="msgs" [closable]="true"></p-messages>-->
+
+
+
+<button pButton type="button" icon="fa-plus" class="ui-button-success bot-20" (click)="showDialogToAdd()" label="Crear Cliente" ></button>
+
+<div class="ui-widget-header " style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText  placeholder="Filtrar" >
+</div>
+<p-dataTable [value]="clientes"  [paginator]="true" [rows]="5"
+[responsive]="true"[rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" #dt  resizableColumns="true" >
+    <p-header>Clientes</p-header>
+    <p-column field="nombre" header="Nombre"  [sortable]="true"></p-column>
+    <p-column field="apellido" header="Apellido"  [sortable]="true"></p-column>
+    <p-column field="correo" header="Correo"  [sortable]="true"></p-column>
+    <p-column field="direccion" header="Direccion"  [sortable]="true"></p-column>
+    <p-column field="telefono" header="Celular"  [sortable]="true"></p-column>
+    <p-column field="telefono_fijo" header="Fijo"  [sortable]="true"></p-column>
+    <p-column styleClass="col-button" >
+      <ng-template pTemplate="header">
+      </ng-template>
+      <ng-template let-cliente="rowData" pTemplate="body" >
+          <button type="button" pButton (click)="selectCliente(cliente)" icon="fa-pencil" class="ui-button-sucess"></button>
+          <button type="button" pButton (click)="confirm(cliente)" icon="fa-trash" class="ui-button-danger" ></button>
+      </ng-template>
+  </p-column>
+
+</p-dataTable>
+
+
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" [responsive]="true"   width="300"></p-confirmDialog>
+
+
+<p-dialog header="Cliente" [(visible)]="displayDialog" [responsive]="true"  showEffect="fade" [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="cliente">
+
+        <div class="ui-grid-row ui-inputgroup">
+            <div class="ui-grid-col-4"><label for="nombre">Nombre</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="nombre" [(ngModel)]="cliente.nombre" /></div>
+        </div>
+        <p></p>
+        <div class="ui-grid-row ui-inputgroup">
+            <div class="ui-grid-col-4"><label for="apellido">Apellido</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="apellido" [(ngModel)]="cliente.apellido" /></div>
+        </div>
+        <p></p>
+        <div class="ui-grid-row ui-inputgroup">
+            <div class="ui-grid-col-4"><label for="direccion">Direccion</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="direccion" [(ngModel)]="cliente.direccion" /></div>
+        </div>
+        <p></p>
+        <div class="ui-grid-row ui-inputgroup">
+            <div class="ui-grid-col-4"><label for="telefono">Celular</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="telefono" [(ngModel)]="cliente.telefono" /></div>
+        </div>
+        <p></p>
+        <div class="ui-grid-row ui-inputgroup">
+            <div class="ui-grid-col-4"><label for="telefono_fijo">Fijo</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="telefono_fijo" [(ngModel)]="cliente.telefono_fijo" /></div>
+        </div>
+        <p></p>
+        <div class="ui-grid-row ui-inputgroup">
+            <div class="ui-grid-col-4"><label for="correo">Correo</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="correo" [(ngModel)]="cliente.correo" /></div>
+        </div>
+
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="closeDialog()" label="Cerrar" class="ui-button-danger" ></button>
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
+        </div>
+    </p-footer>
+</p-dialog>
