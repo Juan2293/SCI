@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ClientesService} from '../../services/clientes.service';
-import {Message} from 'primeng/components/common/api';
 import {ConfirmationService} from 'primeng/primeng';
+import {MensajesService} from '../../services/mensajes.service';
+
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -10,9 +11,12 @@ import {ConfirmationService} from 'primeng/primeng';
 })
 export class ClientesComponent implements OnInit {
 
-
-  msgs: Message[] = [];
-
+  //mensaje
+  msgs:any[]=[];
+  // setTimeout(() => {
+  //             this.carService.getCarsSmall().then(cars => this.cars = cars);
+  //             this.loading = false;
+  //         }, 1000);
   loading: boolean = false;
   //status servicio
   statusCode: number;
@@ -24,33 +28,20 @@ export class ClientesComponent implements OnInit {
   displayDialog:boolean;
   //nuevo cliente
   newCliente:boolean;
-  constructor( private _clientesService:ClientesService, private _confirmationService:ConfirmationService) { }
 
-  showSuccess(mesaneje:string) {
-      this.msgs = [];
-      this.msgs.push({severity:'success', summary:"DONE", detail:mesaneje});
-  }
+  constructor(
 
-  showError(mensaje:string) {
-       this.msgs = [];
-       this.msgs.push({severity:'error', summary:"ERROR", detail:mensaje});
-   }
+    private _clientesService:ClientesService,
+    private _confirmationService:ConfirmationService,
+    private _mensajesService:MensajesService
 
-   showInfo(mensaje:string) {
-        this.msgs = [];
-        this.msgs.push({severity:'info', summary:"INFO", detail:mensaje});
-    }
-
+  ){ }
 
   ngOnInit() {
-
       this.getClientes();
-
   }
-  selectCliente(cliente: any) {
 
-        this.msgs = [];
-        this.msgs.push({severity:'info', summary:'Cliente Select', detail:'Nombre: ' + cliente.clienteId});
+  selectCliente(cliente: any) {
         this.newCliente = false;
         this.cliente = this.cloneCliente(cliente);
         this.displayDialog=true;
@@ -69,33 +60,23 @@ export class ClientesComponent implements OnInit {
           message: 'Quieres eliminar a <strong>'+ cliente.nombre+'</strong> de tus clientes?',
           accept: () => {
                 this.cliente = this.cloneCliente(cliente);
-                console.log("confirm ")
-                console.log(this.cliente);
                 this.deleteCliente(this.cliente);
           }
       });
   }
 
-
   showDialogToAdd() {
           this.newCliente = true;
           this.cliente = new Cliente();
           this.displayDialog = true;
-      }
-  getClientes(){
+    }
 
+  getClientes(){
       this._clientesService.getClientes().subscribe( clientes =>{
       this.clientes = clientes;
     });
-
-
   }
 
-  cleanMessage(){
-
-  //setTimeout(this.msgs=[], 3000);
-  //this.showError();
-  }
   closeDialog(){
     if (this.displayDialog)
         this.displayDialog = false;
@@ -103,7 +84,7 @@ export class ClientesComponent implements OnInit {
 
   save() {
 
-    let clientes = [...this.clientes];
+    // let clientes = [...this.clientes];
 
     if(this.newCliente){
 
@@ -111,14 +92,15 @@ export class ClientesComponent implements OnInit {
           console.log("success")
         },  response =>{
 
-          this.clientes = clientes;
+          // this.clientes = clientes;
           this.getClientes();
 
             console.log("response");
             console.log(response.status);
             this.statusCode =response.status;
             if(this.statusCode === 201){
-                this.showSuccess("Se creó el cliente");
+                this.msgs = this._mensajesService.showSuccess("Se creó el cliente");
+
             }
 
         },
@@ -127,29 +109,33 @@ export class ClientesComponent implements OnInit {
         });
 
     }else{
-        this._clientesService.updateCliente(this.cliente).subscribe(successCode => {
-          console.log(successCode)
-        },  response =>{
+        this._clientesService.updateCliente(this.cliente).subscribe(response => {
+          //este no funciona
+          console.log(response)
+        },  error =>{
+          //aqui ni siquiera entra
 
-          this.clientes = clientes;
+          // this.clientes = clientes;
           this.getClientes();
 
             console.log("response update");
-            console.log(response.status);
-            this.statusCode =response.status;
+            console.log(error.status);
+            this.statusCode =error.status;
             if(this.statusCode === 201){
 
             }
         },
       ()=>{
+        //aqui entra en el update
           this.getClientes();
-          this.showInfo("Se editó el cliente");
+          this.msgs = this._mensajesService.showInfo("Se editó el cliente");
           console.log("fin del servicio update")
         });
     }
         this.cliente = null;
         this.displayDialog = false;
  }
+
  deleteCliente(cliente:any){
 
    console.log("elegi el"+cliente);
@@ -158,6 +144,7 @@ export class ClientesComponent implements OnInit {
 
      console.log("delete success")
    },error=>{
+     this.msgs =  this._mensajesService.showInfo("Se eliminó el cliente");
      console.log("delete error");
      this.getClientes();
    },()=>{

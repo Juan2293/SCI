@@ -19,17 +19,26 @@ import {MessageModule} from 'primeng/primeng';
 import {GrowlModule} from 'primeng/primeng';
 import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/primeng';
+import {ScheduleModule} from 'primeng/primeng';
+import {CalendarModule} from 'primeng/primeng';
+
 //componentes
 import { AppComponent } from './app.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { PedidosComponent } from './components/pedidos/pedidos.component';
+import { PedidoComponent } from './components/pedido/pedido.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProductosComponent } from './components/productos/productos.component';
+
+
 //servicios
 import {ClientesService} from './services/clientes.service';
-
+import {PedidosService} from './services/pedidos.service';
+import {ProductosService} from './services/productos.service';
+import {MensajesService} from "./services/mensajes.service";
 //rutas
 import { APP_ROUTING } from './app.routes';
-import { PedidoComponent } from './components/pedido/pedido.component';
 
 //pipes
 
@@ -40,6 +49,8 @@ import { PedidoComponent } from './components/pedido/pedido.component';
     NavbarComponent,
     PedidosComponent,
     PedidoComponent,
+    HomeComponent,
+    ProductosComponent
 
   ],
   imports: [
@@ -60,10 +71,18 @@ import { PedidoComponent } from './components/pedido/pedido.component';
     MessageModule,
     GrowlModule,
     ConfirmDialogModule,
-    DropdownModule
+    DropdownModule,
+    CalendarModule,
+    ScheduleModule
 
   ],
-  providers: [ClientesService,ConfirmationService],
+  providers: [
+    ClientesService,
+    ConfirmationService,
+    PedidosService,
+    ProductosService,
+    MensajesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

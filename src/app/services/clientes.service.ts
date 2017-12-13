@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders  } from '@angular/common/http';
+import { HttpClient  } from '@angular/common/http';
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class ClientesService {
 
   clientes:any[]=[];
-  ip_servicios:string = "192.168.0.12";
+  url:string = "http://192.168.0.12:8080/user/";
+  
   constructor(private http:HttpClient) {
 
   }
 
   getClientes(){
 
-    let url = "http://"+this.ip_servicios+":8080/user/clientes";
-
-
-    return this.http.get(url).map( (resp:any)=>{
+    return this.http.get(this.url+"clientes").map( (resp:any)=>{
       this.clientes = resp;
       return this.clientes;
     });
@@ -26,9 +24,7 @@ export class ClientesService {
 
 createCliente(cliente:any){
 
-
-
-      return  this.http.post('http://'+this.ip_servicios+':8080/user/cliente',cliente)
+      return  this.http.post(this.url+"cliente",cliente)
             .map(
               (success:any) => {
                 console.log("funciono create  ");
@@ -43,12 +39,14 @@ createCliente(cliente:any){
       }
   updateCliente(cliente: any) {
 
-      return this.http.put('http://'+this.ip_servicios+':8080/user/cliente', cliente)
+      return this.http.put(this.url+"cliente", cliente)
           .map(
                (success:any) => {
+                 //entra aqui
                    console.log(success.status)
                 },
                err =>{
+                 //aqui no entra
                     console.log("Error occured update");
                }
              );
@@ -56,8 +54,7 @@ createCliente(cliente:any){
 
     deleteCliente(cliente: any) {
 
-
-        return this.http.delete('http://'+this.ip_servicios+':8080/user/cliente/'+cliente.clienteId  )
+        return this.http.delete(this.url+"cliente/"+cliente.clienteId  )
             .map(
                  (success:any) => {
                    console.log("sucess delete")
