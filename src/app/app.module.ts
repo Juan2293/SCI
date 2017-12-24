@@ -10,6 +10,8 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input';
 
 //primeng
+import * as jQuery from 'jquery';
+(window as any).jQuery = (window as any).$ = jQuery;  
 import {DataTableModule,SharedModule} from 'primeng/primeng';
 import {ButtonModule} from 'primeng/primeng';
 import {DialogModule} from 'primeng/primeng';
@@ -21,6 +23,9 @@ import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/primeng';
 import {ScheduleModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
+import {PanelModule} from 'primeng/primeng';
+import {ToggleButtonModule} from 'primeng/primeng';
+
 
 //componentes
 import { AppComponent } from './app.component';
@@ -39,6 +44,7 @@ import {ProductosService} from './services/productos.service';
 import {MensajesService} from "./services/mensajes.service";
 //rutas
 import { APP_ROUTING } from './app.routes';
+import { FooterComponent } from './components/shared/footer/footer.component';
 
 //pipes
 
@@ -50,7 +56,8 @@ import { APP_ROUTING } from './app.routes';
     PedidosComponent,
     PedidoComponent,
     HomeComponent,
-    ProductosComponent
+    ProductosComponent,
+    FooterComponent
 
   ],
   imports: [
@@ -73,7 +80,9 @@ import { APP_ROUTING } from './app.routes';
     ConfirmDialogModule,
     DropdownModule,
     CalendarModule,
-    ScheduleModule
+    ScheduleModule,
+    PanelModule,
+    ToggleButtonModule
 
   ],
   providers: [

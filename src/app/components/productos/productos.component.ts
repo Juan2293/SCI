@@ -60,7 +60,8 @@ export class ProductosComponent implements OnInit {
     save(){
 
       if(this.newProducto){
-
+        //se asigna la cantidad disponible del producto cuando se crea
+        this.producto.cantidad_disponible=this.producto.cantidad_total;
         this._productosService.createProducto(this.producto).subscribe(resp=>{
           console.log("done!!!")
 
@@ -71,7 +72,8 @@ export class ProductosComponent implements OnInit {
         });
 
       }else{
-
+        //se asigna la cantidad disponible del producto cuando se edita
+        this.producto.cantidad_disponible=this.producto.cantidad_total;
         this._productosService.updateProducto(this.producto).subscribe(resp=>{
 
         },error=>{

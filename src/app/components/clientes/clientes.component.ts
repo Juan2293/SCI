@@ -39,6 +39,7 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit() {
       this.getClientes();
+    
   }
 
   selectCliente(cliente: any) {

@@ -1,9 +1,12 @@
-<h1>Productos</h1>
+<h1 class="fadeIn animated">Productos</h1>
 <hr>
-<p-growl [value]="msgs"></p-growl>
+<p-growl [value]="msgs" [style]="{'margin-top':'50px'}"></p-growl>
+
+<div class="fadeIn animated fast">
+
 
 <button type="button"
-  class="ui-button-success bot-20"
+  class="ui-button-success bot-20 btn-p-3"
   pButton
   data-toggle="modal"
   data-target="#myModal"
@@ -19,12 +22,17 @@
 [responsive]="true" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" #dt    >
     <p-header>Productos</p-header>
     <p-column field="nombre" header="Nombre"  [sortable]="true"></p-column>
-    <p-column field="valor" header="$ Valor"  [sortable]="true"></p-column>
+    <p-column field="valor" header="$ Valor"  [sortable]="true">
+      <ng-template let-col let-producto="rowData" pTemplate="body">
+           <span>{{producto[col.field] | currency}}</span>
+       </ng-template>
+    </p-column>
     <p-column field="cantidad_total" header="Cantidad Total"  [sortable]="true"></p-column>
-    <p-column field="cantidad_disponible" header="cantidad_disponible"  [sortable]="true"></p-column>
+    <p-column field="cantidad_disponible" header="Cantidad Disponible"  [sortable]="true"></p-column>
 
-    <p-column styleClass="col-button"  >
+    <p-column styleClass="col-button" [style]="{'width':'10%','text-align':'center'}" >
       <ng-template pTemplate="header">
+
       </ng-template>
       <ng-template let-producto="rowData" pTemplate="body"  >
 
@@ -44,13 +52,14 @@
           icon="fa-trash"
           class="ui-button-danger"
           (click)="confirm(producto)"
+
           ></button>
 
       </ng-template>
 
   </p-column>
 </p-dataTable>
-
+</div>
 <p-confirmDialog header="Confirmation" icon="fa fa-question-circle" [responsive]="true"  width="300"></p-confirmDialog>
 
 <div class="modal fade" id="myModal" >

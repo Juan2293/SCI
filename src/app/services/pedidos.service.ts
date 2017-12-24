@@ -6,18 +6,16 @@ import 'rxjs/add/operator/map'
 export class PedidosService {
 
 pedidos:any[]=[];
-ip_servicios:string = "192.168.0.12";
+url:string = "http://192.168.0.12:8080/user/";
 
 
   constructor(private http:HttpClient) { }
 
-  createPedido(pedido:any){
+  createPedido(pedidoDTO){
 
-       return  this.http.post('http://'+this.ip_servicios+':8080/user/pedido',pedido).map(
+       return  this.http.post(this.url+'pedido',pedidoDTO).map(
          (success:any) => {
-           console.log("funciono create pedido  ");
-           console.log(success.status);
-
+           console.log("funciono create pedido");
          },
          err => {
            console.log("Error occured create");
@@ -25,4 +23,20 @@ ip_servicios:string = "192.168.0.12";
        );
   }
 
+  getPedidos(){
+
+    return this.http.get(this.url+'pedidos').map((data:any)=>{
+        this.pedidos=data;
+        return this.pedidos;
+      })
+  }
+
+}
+class PedidoProducto{
+    constructor(
+      public pedido?,
+      public producto?,
+      public valor?,
+      public cantidad?
+    ){}
 }

@@ -1,5 +1,10 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* You can add global styles to this file, and also import other style files */
+*{
+  margin: 0px;
+  box-sizing: 0px;
+
+}
 .example-form {
   min-width: 150px;
   max-width: 500px;
@@ -24,4 +29,81 @@
 }
 .bot-200{
   margin-bottom: 200px;
+}
+.bot-40{
+  margin-bottom: 40px;
+}
+
+.top-10{
+
+}
+.top-150{
+  margin-top: 150px;
+}
+.p-bot-20{
+  padding-bottom: 20px;
+}
+
+.btn-p-3{
+  padding: 3px !important;
+}
+.btn-p-2{
+  padding: 2px !important;
+}
+.ui-state-disabled, .ui-widget:disabled{
+  opacity: 0.50 !important;
+}
+i{
+  color:#757575;
+  /* font-size: 20px !important; */
+}
+/* nuevo producto modulo pedido */
+#btn-guardar-pedido{
+  padding: 4px;
+}
+/* toggle transporte modulo pedido */
+#transporte_btn > div > span.ui-button-text.ui-unselectable-text{
+  padding: 5.5px !important;
+}
+/* Calendario */
+/* Color fuente */
+.fc-day-grid-event .fc-content{
+  color:#F0F0F0;
+  font-weight: 400;
+}
+/* Color background  dia */
+.ui-state-highlight{
+  border-color:#FCF8E3 !important;
+  background:#FCF8E3 !important;
+  color:black !important;
+}
+/* Para todos los iconos */
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fast {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
 }

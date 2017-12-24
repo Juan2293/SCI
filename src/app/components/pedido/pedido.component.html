@@ -1,144 +1,373 @@
-<h1>Pedido</h1>
+<h1 class="fadeIn animated ">Pedido</h1>
 <hr>
 
-<p-dropdown [options]="clientes" [(ngModel)]="selectedCliente" filter="true " ></p-dropdown>
+<form class="top-40 fadeIn animated fast">
 
-<form class="top-40">
+  <p-panel [toggleable]="true" header="Información del cliente">
+
+        <div class="ui-g ui-fluid bot-20" >
+
+          <div class="ui-g-12 ui-md-4">
+                <div class="ui-m-12" >
+                  <label for="cliente">Cliente</label>
+                  <p-dropdown id="cliente" [options]="clientes" [(ngModel)]="selectedCliente" name="cliente" filter="true" [autoWidth]="false" ></p-dropdown>
+                </div>
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <label for="cliente-direccion">Dirección</label>
+              <div id="cliente-direccion" class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-home fa-fw" aria-hidden="true"></i></span>
+                <input  type="text" pInputText placeholder="Dirección" [value]="selectedCliente.direccion" name="direccion_cliente" *ngIf="selectedCliente" [disabled]="true"  >
+                <input type="text" pInputText placeholder="Dirección" name="direccion_cliente" *ngIf="!selectedCliente"   [disabled]="true"  >
+              </div>
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <label for="cliente-celular">Celular</label>
+              <div id="cliente-celular" class="ui-inputgroup">
+                  <span class="ui-inputgroup-addon"><i class="fa fa-mobile fa-fw" aria-hidden="true"></i></span>
+                   <input type="text" pInputText placeholder="Celular" [value]="selectedCliente.telefono" name="telefono" *ngIf="selectedCliente" [disabled]="true"   >
+                   <input type="text" pInputText placeholder="Celular" name="telefono" *ngIf="!selectedCliente" [disabled]="true"    >
+              </div>
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <label for="cliente-telefono">Teléfono</label>
+              <div id="cliente-telefono" class="ui-inputgroup">
+                  <span class="ui-inputgroup-addon"><i class="fa fa-phone fa-fw" aria-hidden="true"></i></span>
+                   <input type="text" pInputText placeholder="Teléfono" [value]="selectedCliente.telefono_fijo" name="telefono_fijo" *ngIf="selectedCliente"  [disabled]="true"   >
+                   <input type="text" pInputText placeholder="Teléfono" name="telefono_fijo" *ngIf="!selectedCliente"  [disabled]="true"    >
+              </div>
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <label for="cliente-correo">Correo</label>
+              <div id="cliente-correo" class="ui-inputgroup">
+                  <span class="ui-inputgroup-addon"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></span>
+                 <input type="text" pInputText placeholder="Correo" [value]="selectedCliente.correo" name="correo" *ngIf="selectedCliente"  [disabled]="true"     >
+                  <input type="text" pInputText placeholder="Correo"  name="correo" *ngIf="!selectedCliente" [disabled]="true"       >
+              </div>
+          </div>
+
+      </div>
+  </p-panel>
 
 
+<hr>
 
-  <div class="ui-g ui-fluid bot-20" *ngIf="selectedCliente!=null" >
 
-    <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-            <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-            <input type="text" pInputText placeholder="Nombre" [value]="selectedCliente.nombre + ' '+ selectedCliente.apellido" name="nombre" >
+<p-panel [toggleable]="true" header="Añadir productos al pedido" class="p-bot-20">
+    <!-- <p-header>
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px"><h4><small>Añadir productos al pedido</small></h4></span>
+        </div>
+    </p-header> -->
+<div class="ui-g ui-fluid ">
+    <div class="ui-g-12 ui-md-3">
+
+
+        <!-- <div class="ui-inputgroup"> -->
+          <div class="ui-m-12" >
+            <label for="producto">Producto</label>
+            <p-dropdown
+            id="producto"
+            [options]="productos"
+            [(ngModel)]="selectedProducto"
+            name="producto" filter="true"
+            [autoWidth]="false"
+            (onChange)="onChangeProducto()"
+            ></p-dropdown>
+        <!-- </div> -->
         </div>
     </div>
 
-    <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-            <span class="ui-inputgroup-addon"><i class="fa fa-building"></i></span>
-            <input type="text" pInputText placeholder="Dirección" [value]="selectedCliente.direccion" name="direccion" >
+    <div class="ui-g-12 ui-md-3">
+      <label for="producto-valor">Valor</label>
+        <div id="producto-valor" class="ui-inputgroup"  >
+            <span class="ui-inputgroup-addon" > <i class="fa fa-usd fa-fw" aria-hidden="true" ></i> </span>
+            <input
+            type="number"
+            pInputText
+            placeholder="Valor"
+            [(ngModel)]="pedidoProducto.valor"
+            name="valor"   >
+        </div>
+              {{pedidoProducto.valor| currency:'USD':'symbol-narrow':'.0-0'}}
+    </div>
+    <div class="ui-g-12 ui-md-3">
+      <label for="producto-cantidad">Cantidad</label>
+        <div id="producto-cantidad" class="ui-inputgroup">
+          <span class="ui-inputgroup-addon" ><i class="fa fa-hashtag fa-fw" aria-hidden="true"></i> </span>
+              <input
+              type="number"
+              [(ngModel)]="pedidoProducto.cantidad"
+              name="cantidad"
+              placeholder="Cantidad"
+              pInputText>
         </div>
     </div>
 
-    <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-            <span class="ui-inputgroup-addon"><i class="fa fa-mobile"></i></span>
-            <input type="text" pInputText placeholder="Celular" [value]="selectedCliente.telefono" name="telefono"  >
-        </div>
-    </div>
-    <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-            <span class="ui-inputgroup-addon"><i class="fa fa-phone"></i></span>
-            <input type="text" pInputText placeholder="Telefono" [value]="selectedCliente.telefono_fijo" name="telefono_fijo"  >
-        </div>
-    </div>
-    <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-            <span class="ui-inputgroup-addon"><i class="fa fa-envelope"></i></span>
-            <input type="text" pInputText placeholder="Correo" [value]="selectedCliente.correo" name="correo"  >
-        </div>
+    <div class="ui-g-12 ui-md-3" style="margin-top:32px">
+        <button
+        pButton
+        type="button"
+        icon="fa-plus"
+        label="Añadir producto"
+        class="ui-button-default bot-20 btn-p-2"
+        (click)="presiono()">
+      </button>
     </div>
 
 </div>
+<br>
+      <!-- <div align="rigth">
+      </div> -->
 
 
-<div *ngIf="1==1" >
+        <p-dataTable
+        (onEdit)="calcularPrecioProductos()"
+        [value]="pedidoProductoDT"
+        [editable]="true"
+        [responsive]="true"
+        scrollable="true"
+        header="Productos">
 
+          <p-column field="rowIndex" header="#"   [style]="{'width':'10%'}" >
+            <ng-template   pTemplate="header" >
+                     <span>#</span>
+            </ng-template>
+              <ng-template  let-index="rowIndex"  pTemplate="body" >
+                <div align="center" style="display:inline-block">
+                       <span>{{(index+1)}}</span>
+                </div>
+              </ng-template>
+          </p-column>
 
-  <div class="form-group row" >
-    <label for="inputValorTransporte"  class="col-sm-2 col-form-label">Valor Transporte</label>
-    <div class="col-sm-10">
-      <input type="number" pInputText class="form-control" id="inputValorTransporte" placeholder="Valor Transporte"
-        [(ngModel)]="pedido.valor_transporte" name="valor_transporte"
-          >
-    </div>
-  </div>
-  <div class="form-group row" >
-    <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha Pedido</label>
-    <div class="col-sm-10">
-    <p-calendar [(ngModel)]="pedido.fecha_pedido" name="fecha_pedido" placeholder="Fecha pedido"  [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
-    </div>
-  </div>
-  <fieldset class="form-group">
-    <div class="row">
-      <legend class="col-form-legend col-sm-2">Radios</legend>
-      <div class="col-sm-10">
-        <div class="form-check">
-          <label class="form-check-label">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-          Transporte
-          </label>
+          <p-column  field="producto.nombre" header="Producto"></p-column>
+
+          <p-column field="valor" header="Precio" [editable]="true">
+                <!-- Cuando se empeiza desde el rowData se comienza desde el [value] -->
+              <ng-template let-col let-pedidoProducto="rowData"   pTemplate="body">
+                 <span >{{pedidoProducto.valor| currency:'USD':'symbol-narrow':'.0-0'}} </span>
+              </ng-template>
+              <ng-template let-col let-pedidoProducto="rowData" pTemplate="editor">
+                <input
+                (change)="calcularPrecioProductos()"
+                pInputText
+                [(ngModel)]="pedidoProducto.valor"
+                name="pedidoProducto_valor"
+                appendTo="body"
+                type="number"
+                >
+             </ng-template>
+          </p-column>
+          <p-column field="cantidad" header="Cantidad" [editable]="true">
+            <!-- <ng-template let-col let-producto="rowData"   pTemplate="body">
+               <span >{{producto.cantidad}} </span>
+            </ng-template>
+            <ng-template let-col let-producto="rowData" pTemplate="editor">
+              <input
+              pInputText
+              [(ngModel)]="producto.cantidad"
+              name="producto_cantidad"
+              appendTo="body"
+              type="number"
+              >
+           </ng-template> -->
+
+          </p-column>
+
+          <p-column field="total" header="Total">
+            <ng-template let-col let-pedidoProducto="rowData"  pTemplate="body">
+              <!-- Cuando se empeiza desde el roeData se comienza desde el [value] -->
+               <span >{{(pedidoProducto.valor*pedidoProducto.cantidad) |  currency:'USD':'symbol-narrow':'.0-0' }} </span>
+           </ng-template>
+          </p-column>
+
+          <ng-template pTemplate="emptymessage">
+            No se han registrado productos.
+          </ng-template>
+
+          <p-column    [style]="{'width':'5%'}">
+              <ng-template  pTemplate="body" let-index="rowIndex" let-pedidoProducto="rowData">
+                <div align="center">
+                  <button
+                  type="button"
+                  pButton
+                  icon="fa-times"
+                  class="ui-button-info fa-fw"
+                  (click)="removeDataTable(index,pedidoProducto)" ></button>
+                </div>
+              </ng-template>
+          </p-column>
+
+           <p-footerColumnGroup>
+
+             <p-row>
+                 <p-column field="sumaValorProductos"  >
+                   <ng-template  pTemplate="footer" >
+                     <div align="center">
+                       {{ sumaValorProductos | currency:'USD':'symbol-narrow':'.0-0' }}
+                      </div>
+                   </ng-template>
+                 </p-column>
+             </p-row>
+          </p-footerColumnGroup>
+      </p-dataTable>
+
+<div class="bot-40">
+
+</div>
+
+</p-panel>
+<hr>
+<p-panel header="Información del pedido" [toggleable]="true">
+    <!-- <p-header>
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px"><h4><small>Información pedido</small></h4></span>
         </div>
-        <div class="form-check">
-          <label class="form-check-label">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-            Sin Transporte
-          </label>
-        </div>
+    </p-header> -->
+
+  <div class="ui-g ui-fluid">
+
+
+
+      <div class="ui-g-12 ui-md-6" >
+        <label for="valor_pedido">Dirección</label>
+            <div id="valor_pedido" class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="fa fa-home fa-fw" aria-hidden="true"></i></span>
+
+            <input
+            id="direccion"
+            type="text"
+            pInputText
+            placeholder="Dirección"
+            [(ngModel)]="pedido.direccion"
+            name="direccion"   >
+          </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="descripcion">Descripción</label>
-      <textarea class="form-control" id="descripcion" rows="5"></textarea>
-    </div>
-  </fieldset>
 
-  <div class="form-group row">
-    <div class="col-sm-10">
-      <button type="submit" class="btn btn-primary ">Sign in</button>
-    </div>
-  </div>
+
+
+        <div class="ui-g-12 ui-md-6">
+            <label for="fecha_pedido_input">Fecha pedido</label>
+            <p-calendar
+            placeholder="dd/mm/aaaa"
+            id="fecha_pedido_input"
+            [(ngModel)]="pedido.fecha_pedido"
+            name="pedido"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy">
+          </p-calendar>
+        </div>
 
   </div>
 
-  <div class="">
-    <form>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-    </div>
+  <div class="ui-g ui-fluid">
+
+        <div class="ui-g-12 ui-md-6">
+          <label for="fecha_entrega_input">Entrega-Devolución</label>
+          <p-calendar
+            (onSelect)="calcularDias()"
+            placeholder="entrega - devolución"
+            selectionMode="range"
+            id="fecha_entrega_input"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy"
+            [(ngModel)]="rangoFechas"
+            name="rangoFechas"
+
+             ></p-calendar>
+        </div>
+
+        <div class="ui-g-12 ui-md-6">
+          <label for="dias_alquiler">Dias de alquiler</label>
+          <input
+          id="dias_alquiler"
+          type="number"
+          pInputText
+          placeholder="Dias de alquiler"
+          [(ngModel)]="pedido.dias_alquiler"
+          name="dias_alquiler"
+          (change)="calcularPrecioConDias()"
+          >
+        </div>
+
   </div>
-  <div class="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="form-group">
-    <label for="inputAddress2">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
-    </div>
-    <div class="form-group col-md-4">
-      <label for="inputState">State</label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="form-group col-md-2">
-      <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="form-check">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox"> Check me out
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Sign in</button>
-</form>
-  </div>
+
+<div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-6">
+            <div class="ui-m-5" >
+              <label for="transporte_btn">Transporte</label>
+              <p-toggleButton
+               [(ngModel)]="pedido.transporte"
+               name="transporte"
+               id="transporte_btn"
+                onLabel="Con transporte"
+                offLabel="Sin Transporte"
+                onIcon="fa-check-square"
+                offIcon="fa-minus-square"
+                (onChange)="calcularTotalConTransporte()">
+
+              </p-toggleButton>
+            </div>
+        </div>
+
+
+        <div class="ui-g-12 ui-md-6" *ngIf="pedido.transporte==true">
+          <label for="valor_transporte">Precio transporte</label>
+          <div id="valor_transporte" class="ui-inputgroup">
+              <span class="ui-inputgroup-addon"><i class="fa fa-usd fa-fw" aria-hidden="true"></i></span>
+              <input
+              id="valor_transporte_input"
+              type="number"
+              pInputText
+              placeholder="Valor transporte"
+              [(ngModel)]="pedido.valor_transporte"
+              name="valor_transporte"
+              (keyup)="calcularTotalConTransporte()"
+                 >
+              <span class="ui-inputgroup-addon"><i class="fa fa-car fa-fw" aria-hidden="true"></i></span>
+          </div>
+          <span>{{pedido.valor_transporte | currency:'USD':'symbol-narrow':'.0-0'}}</span>
+
+        </div>
+</div>
+
+<div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-12">
+          <label *ngIf="!pedido.transporte" for="valor_pedido">Valor total del pedido</label>
+          <label *ngIf="pedido.transporte" for="valor_pedido">Valor total del pedido <span style="color:#2499E5">con transporte</span></label>
+          <div id="valor_pedido" class="ui-inputgroup">
+              <span class="ui-inputgroup-addon"><i class="fa fa-usd fa-fw" aria-hidden="true"></i></span>
+              <input
+              id="valor_pedido"
+              type="number"
+              pInputText
+              placeholder="Valor total "
+              [(ngModel)]="pedido.valor"
+              name="pedido.valor">
+          </div>
+          <span >{{ pedido.valor | currency:'USD':'symbol-narrow':'.0-0'}}</span>
+        </div>
+        <div class="ui-g-12 ui-md-12">
+            <label for="descripcion">Descripción</label>
+            <textarea
+            class="form-control"
+            id="descripcion" rows="3"
+            pInputTextarea
+            [(ngModel)]="pedido.descripcion"
+            name="descripcion"></textarea>
+      </div>
+</div>
+
+<hr>
+<div  align="center">
+  <button
+  id="btn-guardar-pedido"
+  type="button"
+  class="ui-button-success"
+  pButton label="Guardar pedido"
+  (click)="createPedido()"
+  ></button>
+</div>
+</p-panel>
+
 </form>
