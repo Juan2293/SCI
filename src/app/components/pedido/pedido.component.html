@@ -1,18 +1,34 @@
 <h1 class="fadeIn animated ">Pedido</h1>
 <hr>
 
-<form class="top-40 fadeIn animated fast">
+<form class="top-40 fadeIn animated fast" #forma="ngForm" novalidate="" (ngSubmit)="createPedido(forma)" >
 
-  <p-panel [toggleable]="true" header="Información del cliente">
+    <p-panel [toggleable]="true" header="Información del cliente" >
 
         <div class="ui-g ui-fluid bot-20" >
 
-          <div class="ui-g-12 ui-md-4">
+          <div class=" ui-g-12 ui-md-4">
                 <div class="ui-m-12" >
                   <label for="cliente">Cliente</label>
-                  <p-dropdown id="cliente" [options]="clientes" [(ngModel)]="selectedCliente" name="cliente" filter="true" [autoWidth]="false" ></p-dropdown>
+                  <p-dropdown
+
+                    [ngClass]="{'is-invalid': cliente.errors?.required} "
+                    id="cliente"
+                    (onChange)="onChangeCliente()"
+                    [options]="clientes"
+                    [(ngModel)]="selectedCliente"
+                    name="cliente"
+                    filter="true"
+                    [autoWidth]="false"
+                    #cliente="ngModel"
+                    required
+                    ></p-dropdown>
+                    <div class="custom-feedback-invalid"
+                    *ngIf="cliente.errors?.required">
+                      Seleccione un cliente
+                    </div>
                 </div>
-          </div>
+            </div>
           <div class="ui-g-12 ui-md-4">
             <label for="cliente-direccion">Dirección</label>
               <div id="cliente-direccion" class="ui-inputgroup">
@@ -45,14 +61,9 @@
                   <input type="text" pInputText placeholder="Correo"  name="correo" *ngIf="!selectedCliente" [disabled]="true"       >
               </div>
           </div>
-
       </div>
   </p-panel>
-
-
 <hr>
-
-
 <p-panel [toggleable]="true" header="Añadir productos al pedido" class="p-bot-20">
     <!-- <p-header>
         <div class="ui-helper-clearfix">
@@ -111,7 +122,7 @@
         icon="fa-plus"
         label="Añadir producto"
         class="ui-button-default bot-20 btn-p-2"
-        (click)="presiono()">
+        (click)="addProductoDT()">
       </button>
     </div>
 
@@ -144,19 +155,9 @@
 
           <p-column field="valor" header="Precio" [editable]="true">
                 <!-- Cuando se empeiza desde el rowData se comienza desde el [value] -->
-              <ng-template let-col let-pedidoProducto="rowData"   pTemplate="body">
+              <ng-template let-col let-pedidoProducto="rowData"   pTemplate="body" >
                  <span >{{pedidoProducto.valor| currency:'USD':'symbol-narrow':'.0-0'}} </span>
               </ng-template>
-              <ng-template let-col let-pedidoProducto="rowData" pTemplate="editor">
-                <input
-                (change)="calcularPrecioProductos()"
-                pInputText
-                [(ngModel)]="pedidoProducto.valor"
-                name="pedidoProducto_valor"
-                appendTo="body"
-                type="number"
-                >
-             </ng-template>
           </p-column>
           <p-column field="cantidad" header="Cantidad" [editable]="true">
             <!-- <ng-template let-col let-producto="rowData"   pTemplate="body">
@@ -185,7 +186,7 @@
             No se han registrado productos.
           </ng-template>
 
-          <p-column    [style]="{'width':'5%'}">
+          <p-column [style]="{'width':'5%'}">
               <ng-template  pTemplate="body" let-index="rowIndex" let-pedidoProducto="rowData">
                 <div align="center">
                   <button
@@ -362,10 +363,10 @@
 <div  align="center">
   <button
   id="btn-guardar-pedido"
-  type="button"
+  type="submit"
   class="ui-button-success"
   pButton label="Guardar pedido"
-  (click)="createPedido()"
+
   ></button>
 </div>
 </p-panel>

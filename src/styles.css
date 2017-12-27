@@ -3,8 +3,9 @@
 *{
   margin: 0px;
   box-sizing: 0px;
-
 }
+
+
 .example-form {
   min-width: 150px;
   max-width: 500px;
@@ -33,7 +34,6 @@
 .bot-40{
   margin-bottom: 40px;
 }
-
 .top-10{
 
 }
@@ -53,9 +53,10 @@
 .ui-state-disabled, .ui-widget:disabled{
   opacity: 0.50 !important;
 }
-i{
-  color:#757575;
-  /* font-size: 20px !important; */
+.custom-feedback-invalid{
+    margin-top: .25rem;
+    font-size: .875rem;
+    color: #dc3545;
 }
 /* nuevo producto modulo pedido */
 #btn-guardar-pedido{
@@ -67,18 +68,36 @@ i{
 }
 /* Calendario */
 /* Color fuente */
-.fc-day-grid-event .fc-content{
+#calendario_eventos .fc-day-grid-event .fc-content{
   color:#F0F0F0;
   font-weight: 400;
 }
-/* Color background  dia */
-.ui-state-highlight{
+/* Color background  dia actual */
+#calendario_eventos .ui-state-highlight{
   border-color:#FCF8E3 !important;
   background:#FCF8E3 !important;
   color:black !important;
 }
-/* Para todos los iconos */
 
+#footer{
+  bottom: 0;
+  color: #67757c;
+  padding: 17px 15px;
+  left: 0px;
+  position: relative;
+  right: 0;
+  border-top: 1px solid rgba(120, 130, 140, 0.13);
+  background: #ffffff;
+}
+
+
+
+/* Para todos los iconos */
+i{
+  color:#757575;
+  /* font-size: 20px !important; */
+}
+/* Animación entrada a la pagina */
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;

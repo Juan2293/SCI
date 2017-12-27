@@ -10,8 +10,7 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input';
 
 //primeng
-import * as jQuery from 'jquery';
-(window as any).jQuery = (window as any).$ = jQuery;  
+
 import {DataTableModule,SharedModule} from 'primeng/primeng';
 import {ButtonModule} from 'primeng/primeng';
 import {DialogModule} from 'primeng/primeng';
