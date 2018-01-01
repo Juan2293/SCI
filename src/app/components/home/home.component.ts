@@ -15,12 +15,7 @@ export class HomeComponent implements OnInit {
   pedidos:any[]=[];
 
   constructor(
-    private _pedidosService:PedidosService,
-    ) {
-
-
-
-  }
+    private _pedidosService:PedidosService) { }
 
   ngOnInit() {
       this.getPedidos();
@@ -41,12 +36,9 @@ export class HomeComponent implements OnInit {
   }
 
   fillSchedule(pedidos){
-    console.log(pedidos)
 
     for(let pedido of pedidos){
-      console.log(pedido.fecha_entrega)
       let fecha_entrega = new Date(pedido.fecha_entrega);
-      console.log(fecha_entrega)
       let  evento:any={
 
         id: pedido.pedidoId,

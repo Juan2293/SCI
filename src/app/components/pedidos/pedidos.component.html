@@ -1,3 +1,67 @@
-<p>
-proximamente  pedidos !
-</p>
+<div class="jumbotron" style="padding-top:30px!important;padding-bottom:40px!important">
+  <h1 class="display-4">{{cliente.nombre}}  {{cliente.apellido}}</h1>
+  <hr>
+<div class="form-group row" style="margin-bottom:0px">
+<label for="cliente_direccion" class="col-sm-2 col-form-label"><strong>Dirección:</strong></label>
+<div class="col-sm-10">
+  <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_direccion" [value]="cliente.direccion">
+</div>
+</div>
+<div class="form-group row" style="margin-bottom:0px">
+<label for="cliente_correo" class="col-sm-2 col-form-label"><strong>Correo:</strong></label>
+<div class="col-sm-10">
+  <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_correo" [value]="cliente.correo">
+</div>
+</div>
+<div class="form-group row" style="margin-bottom:0px">
+<label for="cliente_telefono" class="col-sm-2 col-form-label"><strong>Telefono 1:</strong></label>
+<div class="col-sm-10">
+  <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_telefono" [value]="cliente.telefono">
+</div>
+</div>
+<div class="form-group row" style="margin-bottom:0px">
+<label for="cliente_telefono_fijo" class="col-sm-2 col-form-label"><strong>Telefono 2:</strong></label>
+<div class="col-sm-10">
+<input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_telefono_fijo" [value]="cliente.telefono_fijo">
+</div>
+</div>
+</div>
+
+<h1>Pedidos</h1>
+<hr>
+<div *ngFor="let pedido of pedidosCliente; let i=index">
+  <div class="card">
+    <h5 class="card-header">{{pedido.fecha_entrega|date}}</h5>
+    <div class="card-body">
+      <h5 class="card-title">{{pedido.valor| currency:'USD':'symbol-narrow':'.0-0'}}</h5>
+      <p class="card-text">{{pedido.direccion}}</p>
+      <table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let p of productosPorPedido[i]; let j=index">
+      <th>{{(j+1)}}</th>
+      <td>{{p.producto.nombre}}</td>
+      <td>{{p.cantidad}}</td>
+      <td>{{p.valor|currency:'USD':'symbol-narrow':'.0-0'}}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+    </div>
+    <div class="card-footer text-muted text-left">
+      <button type="button" class="btn btn-info pointer">
+        ir otro lado
+     </button>
+    </div>
+  </div>
+  <br>
+</div>

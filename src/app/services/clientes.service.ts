@@ -6,8 +6,9 @@ import 'rxjs/add/operator/map'
 export class ClientesService {
 
   clientes:any[]=[];
+  cliente:any;
   url:string = "http://192.168.0.12:8080/user/";
-  
+
   constructor(private http:HttpClient) {
 
   }
@@ -18,8 +19,15 @@ export class ClientesService {
       this.clientes = resp;
       return this.clientes;
     });
-
   }
+
+  getClientesById(clienteId){
+    return this.http.get(this.url+"cliente/"+clienteId).map( (resp:any)=>{
+      this.cliente = resp;
+      return this.cliente;
+    });
+  }
+
 
 
 createCliente(cliente:any){
@@ -43,7 +51,6 @@ createCliente(cliente:any){
           .map(
                (success:any) => {
                  //entra aqui
-                   console.log(success.status)
                 },
                err =>{
                  //aqui no entra
@@ -58,7 +65,6 @@ createCliente(cliente:any){
             .map(
                  (success:any) => {
                    console.log("sucess delete")
-                     console.log(success.status)
                   },
                  err =>{
                       console.log("Error occured delete");

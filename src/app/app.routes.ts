@@ -6,12 +6,11 @@ import {HomeComponent} from './components/home/home.component';
 import {ProductosComponent} from './components/productos/productos.component';
 const APP_ROUTES: Routes = [
 
-
-  { path: 'clientes', component: ClientesComponent },
-  { path: 'pedidos', component: PedidosComponent },
-  { path: 'pedido', component: PedidoComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'clientes', component: ClientesComponent },
+  { path: 'pedido', component: PedidoComponent },
   { path: 'productos', component: ProductosComponent },
+  { path: 'pedidos/:nombreCliente/:clienteId', component: PedidosComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
   //** cualquier cosa me redirecciona al home
 

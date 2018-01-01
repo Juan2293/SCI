@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {Validators,FormControl,FormGroup,FormBuilder} from '@angular/forms';
 import {ClientesService} from '../../services/clientes.service';
 import {ConfirmationService} from 'primeng/primeng';
 import {MensajesService} from '../../services/mensajes.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-clientes',
@@ -13,42 +15,46 @@ export class ClientesComponent implements OnInit {
 
   //mensaje
   msgs:any[]=[];
-  // setTimeout(() => {
-  //             this.carService.getCarsSmall().then(cars => this.cars = cars);
-  //             this.loading = false;
-  //         }, 1000);
-  loading: boolean = false;
   //status servicio
   statusCode: number;
   //all clientes
   clientes:any[]=[];
-  //cliente
-  cliente:any;
-  //abrir/cerrrar modal
-  displayDialog:boolean;
   //nuevo cliente
   newCliente:boolean;
+  //validaciones
+  clienteForm:any;
 
   constructor(
 
     private _clientesService:ClientesService,
     private _confirmationService:ConfirmationService,
-    private _mensajesService:MensajesService
+    private _mensajesService:MensajesService,
+    private formBuilder:FormBuilder,
+    private router:Router
+  ){
 
-  ){ }
+    this.clienteForm = this.formBuilder.group({
+      'clienteId': new FormControl(),
+      'nombre': new FormControl('',Validators.required),
+      'apellido':new FormControl('',Validators.required),
+      'direccion':new FormControl('',Validators.required),
+      'correo':new FormControl(),
+      'telefono':new FormControl('',Validators.required),
+      'telefono_fijo':new FormControl()
+    });
+
+  }
 
   ngOnInit() {
       this.getClientes();
-    
   }
 
   selectCliente(cliente: any) {
         this.newCliente = false;
-        this.cliente = this.cloneCliente(cliente);
-        this.displayDialog=true;
+        this.clienteForm.reset(cliente);
     }
 
-    cloneCliente(c: any): any {
+  cloneCliente(c: any): any {
       let cliente = new Cliente();
       for(let propiedad in c) {
           cliente[propiedad] = c[propiedad];
@@ -56,20 +62,19 @@ export class ClientesComponent implements OnInit {
       return cliente;
   }
 
-  confirm(cliente:any) {
+  confirm(clienteDT:any) {
       this._confirmationService.confirm({
-          message: 'Quieres eliminar a <strong>'+ cliente.nombre+'</strong> de tus clientes?',
+          message: 'Quieres eliminar a <strong>'+ clienteDT.nombre+'</strong> de tus clientes?',
           accept: () => {
-                this.cliente = this.cloneCliente(cliente);
-                this.deleteCliente(this.cliente);
+                let cliente = this.cloneCliente(clienteDT);
+                this.deleteCliente(cliente);
           }
       });
   }
 
   showDialogToAdd() {
           this.newCliente = true;
-          this.cliente = new Cliente();
-          this.displayDialog = true;
+          this.clienteForm.reset();
     }
 
   getClientes(){
@@ -78,87 +83,56 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-  closeDialog(){
-    if (this.displayDialog)
-        this.displayDialog = false;
-  }
-
   save() {
-
-    // let clientes = [...this.clientes];
-
+    let cliente = this.clienteForm.value;
     if(this.newCliente){
-
-        this._clientesService.createCliente(this.cliente).subscribe(successCode => {
-          console.log("success")
+        this._clientesService.createCliente(cliente).subscribe(successCode => {
         },  response =>{
-
-          // this.clientes = clientes;
           this.getClientes();
-
-            console.log("response");
-            console.log(response.status);
             this.statusCode =response.status;
             if(this.statusCode === 201){
                 this.msgs = this._mensajesService.showSuccess("Se creó el cliente");
-
             }
-
         },
         ()=>{
-          console.log("fin del servicio")
         });
-
+            this.clienteForm.reset();
     }else{
-        this._clientesService.updateCliente(this.cliente).subscribe(response => {
-          //este no funciona
-          console.log(response)
-        },  error =>{
-          //aqui ni siquiera entra
-
-          // this.clientes = clientes;
-          this.getClientes();
-
-            console.log("response update");
-            console.log(error.status);
-            this.statusCode =error.status;
-            if(this.statusCode === 201){
-
-            }
+        this._clientesService.updateCliente(cliente).subscribe(
+        response => {
         },
-      ()=>{
-        //aqui entra en el update
+        error =>{        },
+        ()=>{
           this.getClientes();
           this.msgs = this._mensajesService.showInfo("Se editó el cliente");
-          console.log("fin del servicio update")
         });
     }
-        this.cliente = null;
-        this.displayDialog = false;
+
  }
 
  deleteCliente(cliente:any){
-
-   console.log("elegi el"+cliente);
-
    this._clientesService.deleteCliente(cliente).subscribe(success=>{
-
-     console.log("delete success")
    },error=>{
-     this.msgs =  this._mensajesService.showInfo("Se eliminó el cliente");
-     console.log("delete error");
+     this.msgs =  this._mensajesService.showError("Se eliminó el cliente");
      this.getClientes();
    },()=>{
-     console.log("delete ultimo")
-
    });
-
  }
 
+ pedidosCliente(cliente:any){
+    let nombre =  cliente.nombre.toLowerCase();
+     this.router.navigate(['/pedidos',nombre,cliente.clienteId]);
+ }
 
 }
 
 export class Cliente  {
 
-    constructor(public nombre?, public apellido?, public direccion?, public telefono?, public telefono_fijo?, public correo?) {}
+    constructor(
+      public nombre?,
+      public apellido?,
+      public direccion?,
+      public telefono?,
+      public telefono_fijo?,
+      public correo?) {}
 }
