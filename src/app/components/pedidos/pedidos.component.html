@@ -31,7 +31,7 @@
 <hr>
 <div *ngFor="let pedido of pedidosCliente; let i=index">
   <div class="card">
-    <h5 class="card-header">{{pedido.fecha_entrega|date}}</h5>
+  <h5 class="card-header">{{pedido.fecha_entrega|date}}</h5>
     <div class="card-body">
       <h5 class="card-title">{{pedido.valor| currency:'USD':'symbol-narrow':'.0-0'}}</h5>
       <p class="card-text">{{pedido.direccion}}</p>
@@ -57,10 +57,16 @@
 </table>
 
     </div>
-    <div class="card-footer text-muted text-left">
-      <button type="button" class="btn btn-info pointer">
-        ir otro lado
-     </button>
+
+
+
+    <div class="card-footer text-muted text-center">
+     <button type="button" class="btn btn-info pointer">
+      Descargar
+    </button>
+    <button type="button" class="btn btn-dark pointer">
+      Editar
+   </button>
     </div>
   </div>
   <br>
