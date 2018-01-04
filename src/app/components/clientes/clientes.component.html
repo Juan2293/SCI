@@ -1,175 +1,116 @@
 <h1 class="fadeIn animated">Clientes</h1>
 <hr>
 
-<p-growl [value]="msgs" [style]="{'margin-top':'50px'}" ></p-growl>
- <!-- <p-messages [value]="msgs" [closable]="true" id="p-messages"></p-messages> -->
+<p-growl [value]="msgs" [style]="{'margin-top':'50px'}"></p-growl>
+<!-- <p-messages [value]="msgs" [closable]="true" id="p-messages"></p-messages> -->
 
 
-<div class="fadeIn animated fast" >
+<div class="fadeIn animated fast">
 
 
-<button
-pButton
-type="button"
-icon="fa-plus"
-class="ui-button-success bot-20 btn-p-3"
-(click)="showDialogToAdd()"
-label="Registrar cliente"
-data-toggle="modal"
-data-target="#myModal"
- ></button>
+    <button pButton type="button" icon="fa-plus" class="ui-button-success bot-20 btn-p-3" (click)="showDialogToAdd()" label="Registrar cliente" data-toggle="modal" data-target="#myModal"></button>
 
-<div class="ui-widget-header " style="padding:4px 10px;border-bottom: 0 none">
-    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-    <input #gb type="text" pInputText  placeholder="Filtrar" >
-</div>
-<p-dataTable
-[value]="clientes"
-[paginator]="true"
-[rows]="10"
-[responsive]="true"
-[rowsPerPageOptions]="[5,10,20]"
-[globalFilter]="gb"
-#dt
-  >
-    <p-header>
-      Clientes
-    </p-header>
-    <p-column field="nombre" header="Nombres"  [sortable]="true" [style]="{'width':'20%','text-align':'left'}"></p-column>
-    <p-column field="apellido" header="Apellido"  [sortable]="true" [style]="{'width':'20%','text-align':'left'}"></p-column>
-    <p-column field="direccion" header="Direccion"  [sortable]="true" [style]="{'width':'20%','text-align':'left'}"></p-column>
-    <p-column field="telefono" header="Celular"  [sortable]="true" [style]="{'width':'15%','text-align':'left'}"></p-column>
-    <!-- <p-column field="telefono_fijo" header="Fijo"  [sortable]="true" [style]="{'width':'15%','text-align':'left'}" ></p-column> -->
-    <p-column styleClass="col-button" [style]="{'width':'10%','text-align':'center'}">
-      <ng-template pTemplate="header">
-      </ng-template>
-      <ng-template let-cliente="rowData" pTemplate="body" >
-        <button type="button" pButton (click)="pedidosCliente(cliente)" icon="fa-cubes" class="ui-button-warning" ></button>
-          <button type="button"
-           pButton
-           (click)="selectCliente(cliente)"
-            icon="fa-pencil"
-            class="ui-button-sucess"
-            data-toggle="modal"
-            data-target="#myModal"
-            ></button>
-          <button type="button" pButton (click)="confirm(cliente)" icon="fa-trash" class="ui-button-danger" ></button>
-      </ng-template>
-  </p-column>
+    <div class="ui-widget-header " style="padding:4px 10px;border-bottom: 0 none">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input #gb type="text" pInputText placeholder="Filtrar">
+    </div>
+    <p-dataTable [value]="clientes" [paginator]="true" [rows]="10" [responsive]="true" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" #dt>
+        <p-header>
+            Clientes
+        </p-header>
+        <p-column field="nombre" header="Nombres" [sortable]="true" [style]="{'width':'20%','text-align':'left'}"></p-column>
+        <p-column field="apellido" header="Apellido" [sortable]="true" [style]="{'width':'20%','text-align':'left'}"></p-column>
+        <p-column field="direccion" header="Direccion" [sortable]="true" [style]="{'width':'20%','text-align':'left'}"></p-column>
+        <p-column field="telefono" header="Celular" [sortable]="true" [style]="{'width':'15%','text-align':'left'}"></p-column>
+        <!-- <p-column field="telefono_fijo" header="Fijo"  [sortable]="true" [style]="{'width':'15%','text-align':'left'}" ></p-column> -->
+        <p-column styleClass="col-button" [style]="{'width':'10%','text-align':'center'}">
+            <ng-template pTemplate="header">
+            </ng-template>
+            <ng-template let-cliente="rowData" pTemplate="body">
+                <button type="button" pButton (click)="pedidosCliente(cliente)" icon="fa-cubes" class="ui-button-warning"></button>
+                <button type="button" pButton (click)="selectCliente(cliente)" icon="fa-pencil" class="ui-button-sucess" data-toggle="modal" data-target="#myModal"></button>
+                <button type="button" pButton (click)="confirm(cliente)" icon="fa-trash" class="ui-button-danger"></button>
+            </ng-template>
+        </p-column>
 
-</p-dataTable>
+    </p-dataTable>
 
 
 </div>
 
-<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" [responsive]="true"   width="300"></p-confirmDialog>
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" [responsive]="true" width="300"></p-confirmDialog>
 
-<div class="modal fade" id="myModal" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Cliente</h5>
-        <button type="button" class="close pointer" data-dismiss="modal" aria-label="Close">
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cliente</h5>
+                <button type="button" class="close pointer" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
-<form [formGroup]="clienteForm"  autocomplete="off">
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="clienteForm" autocomplete="off">
 
 
-    <div class="ui-grid ui-grid-responsive ui-fluid"  >
+                    <div class="ui-grid ui-grid-responsive ui-fluid">
 
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm" for="nombre">Nombre</label>
-            <div class="col-sm-10">
-              <input
-              pInputText
-              id="nombre"
-              formControlName="nombre"
-              class="form-control form-control-sm"
-              placeholder="nombre"/>
-                <div class="custom-feedback-invalid"
-                *ngIf="clienteForm.get('nombre').touched && clienteForm.get('nombre').errors?.required">
-                  Ingrese el nombre
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label col-form-label-sm" for="nombre">Nombre</label>
+                            <div class="col-sm-10">
+                                <input pInputText id="nombre" formControlName="nombre" class="form-control form-control-sm" placeholder="nombre" />
+                                <div class="custom-feedback-invalid" *ngIf="clienteForm.get('nombre').touched && clienteForm.get('nombre').errors?.required">
+                                    Ingrese el nombre
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label col-form-label-sm" for="apellido">Apellido</label>
+                            <div class="col-sm-10">
+                                <input pInputText id="apellido" formControlName="apellido" class="form-control form-control-sm" placeholder="apellido" />
+                                <div class="custom-feedback-invalid" *ngIf="clienteForm.get('apellido').touched && clienteForm.get('direccion').errors?.required">
+                                    Ingrese el apellido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label col-form-label-sm" for="direccion">Dirección</label>
+                            <div class="col-sm-10">
+                                <input pInputText id="direccion" formControlName="direccion" class="form-control form-control-sm" placeholder="dirección" />
+                                <div class="custom-feedback-invalid" *ngIf="clienteForm.get('direccion').touched && clienteForm.get('direccion').errors?.required">
+                                    Ingrese la dirección
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label col-form-label-sm" for="telefono">Celular</label>
+                            <div class="col-sm-10">
+                                <input pInputText id="telefono" formControlName="telefono" class="form-control form-control-sm" placeholder="celular" />
+                                <div class="custom-feedback-invalid" *ngIf="clienteForm.get('telefono').touched && clienteForm.get('telefono').errors?.required">
+                                    Ingrese un telefono
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label col-form-label-sm" for="telefono_fijo">Fijo</label>
+                            <div class="col-sm-10">
+                                <input pInputText id="telefono_fijo" formControlName="telefono_fijo" class="form-control form-control-sm" placeholder="fijo" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label col-form-label-sm" for="correo">Correo</label>
+                            <div class="col-sm-10">
+                                <input pInputText id="correo" class="form-control form-control-sm" placeholder="correo" formControlName="correo" />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button (click)="save()" type="submit" class="btn btn-primary pointer" data-dismiss="modal" [disabled]="clienteForm.invalid">Guardar</button>
+                    <button type="button" class="btn btn-secondary pointer" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
-
         </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm" for="apellido">Apellido</label>
-            <div class="col-sm-10">
-              <input
-              pInputText
-              id="apellido"
-              formControlName="apellido"
-              class="form-control form-control-sm"
-              placeholder="apellido"/>
-              <div class="custom-feedback-invalid"
-              *ngIf="clienteForm.get('apellido').touched && clienteForm.get('direccion').errors?.required">
-                Ingrese el apellido
-              </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm" for="direccion">Dirección</label>
-            <div class="col-sm-10">
-              <input
-              pInputText
-              id="direccion"
-              formControlName="direccion"
-              class="form-control form-control-sm"
-              placeholder="dirección"/>
-              <div class="custom-feedback-invalid"
-              *ngIf="clienteForm.get('direccion').touched && clienteForm.get('direccion').errors?.required">
-                Ingrese la dirección
-              </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm" for="telefono">Celular</label>
-            <div class="col-sm-10">
-              <input
-              pInputText
-              id="telefono"
-              formControlName="telefono"
-              class="form-control form-control-sm"
-              placeholder="celular"/>
-              <div class="custom-feedback-invalid"
-              *ngIf="clienteForm.get('telefono').touched && clienteForm.get('telefono').errors?.required">
-                Ingrese un telefono
-              </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm" for="telefono_fijo">Fijo</label>
-            <div class="col-sm-10">
-              <input
-              pInputText
-              id="telefono_fijo"
-              formControlName="telefono_fijo"
-              class="form-control form-control-sm"
-              placeholder="fijo"
-               />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-sm" for="correo">Correo</label>
-            <div class="col-sm-10">
-              <input
-              pInputText
-              id="correo"
-              class="form-control form-control-sm"
-              placeholder="correo"
-              formControlName="correo" />
-            </div>
-        </div>
-
-      </div>
-    </form>
-      <div class="modal-footer">
-        <button (click)="save()" type="submit" class="btn btn-primary pointer"  data-dismiss="modal" [disabled]="clienteForm.invalid"  >Guardar</button>
-        <button type="button" class="btn btn-secondary pointer" data-dismiss="modal"  >Cerrar</button>
-      </div>
-    </div>
-    </div>
     </div>

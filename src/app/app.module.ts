@@ -34,6 +34,7 @@ import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { PedidoComponent } from './components/pedido/pedido.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProductosComponent } from './components/productos/productos.component';
+import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 
 
 //servicios
@@ -56,7 +57,8 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     PedidoComponent,
     HomeComponent,
     ProductosComponent,
-    FooterComponent
+    FooterComponent,
+    SidebarComponent
 
   ],
   imports: [

@@ -11,32 +11,32 @@ import {MensajesService} from '../../services/mensajes.service';
   templateUrl: './pedido.component.html'
 })
 export class PedidoComponent {
-//mensaje
-  msgs:any[]=[];
-//Validaciones formulario
-  pedidoForm:FormGroup;
-  valorEditableDT:any=0;
-//información  dropdown
-  clientes:SelectItem[]=[];
-  productos:SelectItem[]=[];
-//información de los elementos seleccionados
-  selectedCliente:any=[];
-  selectedProducto:any=[];
-//datatable
-  pedidoProductoDT:PedidoProducto[]=[];
-  pedidoProducto:PedidoProducto = {};
-  //pedido
-  pedido:Pedido = {};
-  //rango fechas entrega y devolución
-  rangoFechas:Date[]=[];
-  sumaValorProductos:number=0;
+// mensaje
+  msgs: any[] = [];
+// Validaciones formulario
+  pedidoForm: FormGroup;
+  valorEditableDT: any = 0;
+// información  dropdown
+  clientes: SelectItem[] = [];
+  productos: SelectItem[] = [];
+  // información de los elementos seleccionados
+  selectedCliente: any = [];
+  selectedProducto: any = [];
+  // datatable
+  pedidoProductoDT: PedidoProducto[]=[];
+  pedidoProducto: PedidoProducto = {};
+   // pedido
+  pedido: Pedido = {};
+  // rango fechas entrega y devolución
+  rangoFechas: Date[] = [];
+  sumaValorProductos = 0;
 
 
-  constructor(private _clientesService:ClientesService,
-              private _pedidosService:PedidosService,
-              private _productosService:ProductosService,
+  constructor(private _clientesService: ClientesService,
+              private _pedidosService: PedidosService,
+              private _productosService: ProductosService,
               private formBuilder: FormBuilder,
-              private _mensajesService:MensajesService){
+              private _mensajesService: MensajesService){
 
           this.pedidoForm = this.formBuilder.group({
             'cliente': new FormControl('', Validators.required),
@@ -59,15 +59,15 @@ export class PedidoComponent {
 
           });
 
-        this.selectedCliente=null
+        this.selectedCliente = null
         this.getClientes();
-        this.selectedProducto=null
+        this.selectedProducto = null
         this.getProductos();
 
   }
   ngOnInit() {}
 
-  createPedido(){
+  createPedido() {
 
     this.pedido.cliente = this.pedidoForm.get('cliente').value;
     this.pedido.descripcion = this.pedidoForm.get('descripcion').value;
@@ -80,18 +80,18 @@ export class PedidoComponent {
     this.pedido.valor = this.pedidoForm.get('valor').value;
     this.pedido.direccion = this.pedidoForm.get('direccion').value;
 
-    if(this.selectedCliente!=null){
+    if(this.selectedCliente != null) {
 
-        let pedidoDTO:pedidoDTO = {}
-        pedidoDTO.pedido=this.pedido;
-        pedidoDTO.pedidoProductos=this.pedidoProductoDT;
+        const pedidoDTO: pedidoDTO = {}
+        pedidoDTO.pedido = this.pedido;
+        pedidoDTO.pedidoProductos = this.pedidoProductoDT;
         this.pedido.cliente = this.selectedCliente;
         this._pedidosService.createPedido(pedidoDTO).subscribe(success => {
 
         },
-        error=>{
+        error => {
           this.msgs = this._mensajesService.showSuccess('Se creó el pedido')
-        },()=>{
+        },() => {
         });
     }
   }
@@ -99,8 +99,8 @@ export class PedidoComponent {
     this.sumaValorProductos=0;
         if(this.pedidoProductoDT) {
             for(let producto of this.pedidoProductoDT) {
-              if(producto.cantidad>0){
-                    this.sumaValorProductos += producto.valor*producto.cantidad;
+              if(producto.cantidad > 0) {
+                    this.sumaValorProductos += producto.valor * producto.cantidad;
                 }
             }
         }

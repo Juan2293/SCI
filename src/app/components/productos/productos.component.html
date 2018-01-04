@@ -5,105 +5,82 @@
 <div class="fadeIn animated fast">
 
 
-<button type="button"
-  class="ui-button-success bot-20 btn-p-3"
-  pButton
-  data-toggle="modal"
-  data-target="#myModal"
-  label="Registrar producto"
-  icon="fa-plus"
-  (click)="showDialogToAdd()"></button>
-<div class="ui-widget-header " style="padding:4px 10px;border-bottom: 0 none">
-    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-    <input #gb type="text" pInputText  placeholder="Filtrar" >
+    <button type="button" class="ui-button-success bot-20 btn-p-3" pButton data-toggle="modal" data-target="#myModal" label="Registrar producto" icon="fa-plus" (click)="showDialogToAdd()"></button>
+    <div class="ui-widget-header " style="padding:4px 10px;border-bottom: 0 none">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input #gb type="text" pInputText placeholder="Filtrar">
+    </div>
+
+    <p-dataTable [value]="productos" [paginator]="true" [rows]="5" [responsive]="true" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" #dt>
+        <p-header>Productos</p-header>
+        <p-column field="nombre" header="Nombre" [sortable]="true"></p-column>
+        <p-column field="valor" header="$ Valor" [sortable]="true">
+            <ng-template let-col let-producto="rowData" pTemplate="body">
+                <span>{{producto[col.field] | currency}}</span>
+            </ng-template>
+        </p-column>
+        <p-column field="cantidad_total" header="Cantidad Total" [sortable]="true"></p-column>
+        <p-column field="cantidad_disponible" header="Cantidad Disponible" [sortable]="true"></p-column>
+
+        <p-column styleClass="col-button" [style]="{'width':'10%','text-align':'center'}">
+            <ng-template pTemplate="header">
+
+            </ng-template>
+            <ng-template let-producto="rowData" pTemplate="body">
+
+                <button type="button" pButton icon="fa-pencil" class="ui-button-sucess" (click)="selectProducto(producto)" data-toggle="modal" data-target="#myModal"></button>
+
+                <button type="button" pButton icon="fa-trash" class="ui-button-danger" (click)="confirm(producto)"></button>
+
+            </ng-template>
+
+        </p-column>
+    </p-dataTable>
 </div>
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" [responsive]="true" width="300"></p-confirmDialog>
 
-<p-dataTable [value]="productos"  [paginator]="true" [rows]="5"
-[responsive]="true" [rowsPerPageOptions]="[5,10,20]" [globalFilter]="gb" #dt    >
-    <p-header>Productos</p-header>
-    <p-column field="nombre" header="Nombre"  [sortable]="true"></p-column>
-    <p-column field="valor" header="$ Valor"  [sortable]="true">
-      <ng-template let-col let-producto="rowData" pTemplate="body">
-           <span>{{producto[col.field] | currency}}</span>
-       </ng-template>
-    </p-column>
-    <p-column field="cantidad_total" header="Cantidad Total"  [sortable]="true"></p-column>
-    <p-column field="cantidad_disponible" header="Cantidad Disponible"  [sortable]="true"></p-column>
-
-    <p-column styleClass="col-button" [style]="{'width':'10%','text-align':'center'}" >
-      <ng-template pTemplate="header">
-
-      </ng-template>
-      <ng-template let-producto="rowData" pTemplate="body"  >
-
-          <button
-          type="button"
-          pButton
-          icon="fa-pencil"
-          class="ui-button-sucess"
-          (click)="selectProducto(producto)"
-          data-toggle="modal"
-          data-target="#myModal"
-           ></button>
-
-          <button
-          type="button"
-          pButton
-          icon="fa-trash"
-          class="ui-button-danger"
-          (click)="confirm(producto)"
-
-          ></button>
-
-      </ng-template>
-
-  </p-column>
-</p-dataTable>
-</div>
-<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" [responsive]="true"  width="300"></p-confirmDialog>
-
-<div class="modal fade" id="myModal" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Producto</h5>
-        <button type="button" class="close pointer" data-dismiss="modal" aria-label="Close">
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Producto</h5>
+                <button type="button" class="close pointer" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
-          <form>
-            <div class="form-group row">
-              <label for="nombre" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
-              <div class="col-sm-10">
-                <input type="text" [(ngModel)]="producto.nombre" name="nombre" pInputText class="form-control form-control-sm" id="nombre" placeholder="Nombre">
-              </div>
             </div>
-            <div class="form-group row">
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <label for="nombre" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" [(ngModel)]="producto.nombre" name="nombre" pInputText class="form-control form-control-sm" id="nombre" placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="form-group row">
 
-              <label for="valor" class="col-sm-2 col-form-label col-form-label-sm">Valor</label>
-              <div class="col-sm-10">
-                <div class="ui-inputgroup">
-                <span class="ui-inputgroup-addon"><i class="fa fa-usd"></i></span>
-                <input type="number" [(ngModel)]="producto.valor" name="valor" pInputText class="form-control form-control-sm" id="valor" placeholder="Valor">
-                </div>
-              </div>
+                        <label for="valor" class="col-sm-2 col-form-label col-form-label-sm">Valor</label>
+                        <div class="col-sm-10">
+                            <div class="ui-inputgroup">
+                                <span class="ui-inputgroup-addon"><i class="fa fa-usd"></i></span>
+                                <input type="number" [(ngModel)]="producto.valor" name="valor" pInputText class="form-control form-control-sm" id="valor" placeholder="Valor">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cantidad_total" class="col-sm-2 col-form-label col-form-label-sm">Cantidad total</label>
+                        <div class="col-sm-10">
+                            <div class="ui-inputgroup">
+                                <span class="ui-inputgroup-addon"><i class="fa fa-hashtag"></i></span>
+                                <input type="number" [(ngModel)]="producto.cantidad_total" name="cantidad_total" pInputText class="form-control form-control-sm" id="cantidad_total" placeholder="Cantidad total">
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group row">
-              <label for="cantidad_total" class="col-sm-2 col-form-label col-form-label-sm">Cantidad total</label>
-              <div class="col-sm-10">
-                <div class="ui-inputgroup">
-                <span class="ui-inputgroup-addon"><i class="fa fa-hashtag"></i></span>
-                <input type="number" [(ngModel)]="producto.cantidad_total" name="cantidad_total" pInputText class="form-control form-control-sm" id="cantidad_total" placeholder="Cantidad total">
-                </div>
-              </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="save()" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="save()" data-dismiss="modal" >Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"  >Close</button>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
