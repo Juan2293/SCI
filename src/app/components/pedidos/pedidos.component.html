@@ -1,105 +1,154 @@
+<p-growl [value]="msg" [style]="{'margin-top':'50px'}"></p-growl>
 <div class="jumbotron" style="padding-top:30px!important;padding-bottom:40px!important">
-    <h1 class="display-4">{{cliente.nombre}} {{cliente.apellido}}</h1>
+    <h1 class="display-4"><i class="fa fa-user" aria-hidden="true" style="margin-right:20px"></i>{{cliente.nombre}} {{cliente.apellido}}</h1>
     <hr>
-    <div class="form-group row" style="margin-bottom:0px">
-        <label for="cliente_direccion" class="col-sm-2 col-form-label"><strong>Dirección:</strong></label>
-        <div class="col-sm-10">
-            <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_direccion" [value]="cliente.direccion">
+    <div style="font-size: 17px">
+        <div class="form-group row" style="margin-bottom:0px">
+            <label for="cliente_direccion" class="col-sm-2 col-form-label"><strong>Dirección:</strong></label>
+            <div class="col-sm-10">
+                <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_direccion" [value]="cliente.direccion">
+            </div>
         </div>
-    </div>
-    <div class="form-group row" style="margin-bottom:0px">
-        <label for="cliente_correo" class="col-sm-2 col-form-label"><strong>Correo:</strong></label>
-        <div class="col-sm-10">
-            <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_correo" [value]="cliente.correo">
+        <div *ngIf="cliente.correo" class="form-group row" style="margin-bottom:0px">
+            <label for="cliente_correo" class="col-sm-2 col-form-label"><strong>Correo:</strong></label>
+            <div class="col-sm-10">
+                <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_correo" [value]="cliente.correo">
+            </div>
         </div>
-    </div>
-    <div class="form-group row" style="margin-bottom:0px">
-        <label for="cliente_telefono" class="col-sm-2 col-form-label"><strong>Telefono 1:</strong></label>
-        <div class="col-sm-10">
-            <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_telefono" [value]="cliente.telefono">
+        <div class="form-group row" style="margin-bottom:0px">
+            <label for="cliente_telefono" class="col-sm-2 col-form-label"><strong>Teléfono 1:</strong></label>
+            <div class="col-sm-10">
+                <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_telefono" [value]="cliente.telefono">
+            </div>
         </div>
-    </div>
-    <div class="form-group row" style="margin-bottom:0px">
-        <label for="cliente_telefono_fijo" class="col-sm-2 col-form-label"><strong>Telefono 2:</strong></label>
-        <div class="col-sm-10">
-            <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_telefono_fijo" [value]="cliente.telefono_fijo">
+        <div *ngIf="cliente.telefono_fijo" class="form-group row" style="margin-bottom:0px">
+            <label for="cliente_telefono_fijo" class="col-sm-2 col-form-label"><strong>Teléfono 2:</strong></label>
+            <div class="col-sm-10">
+                <input style="width:220px" type="text" readonly class="form-control-plaintext" id="cliente_telefono_fijo" [value]="cliente.telefono_fijo">
+            </div>
         </div>
     </div>
 </div>
 
-
 <h1>Pedidos</h1>
+
 <hr>
 <div *ngFor="let pedido of pedidosCliente; let i=index">
     <div class="card">
+
         <h5 class="card-header">{{pedido.fecha_entrega|date: 'dd/MM/yyyy'}} - {{pedido.fecha_devolucion|date: 'dd/MM/yyyy'}}</h5>
+
+
         <div class="card-body ">
 
-            <!-- <h5 class="card-title">Valor: {{pedido.valor| currency:'USD':'symbol-narrow':'.0-0'}}</h5> -->
+            <!-- <h5 class="card-title">Valor: {{pedido.valor | currency:'USD':'symbol-narrow':'.0-0'}}</h5> -->
+            <!-- <h5 class="card-title">Información del pedido:</h5> -->
 
             <div class="row">
-                <div class="col">
+
+                <div class="col-3">
                     <label for="pedido_direccion"><strong>Dirección</strong></label>
                     <div>
                         <input style="width:220px" type="text" readonly class="form-control-plaintext" id="pedido_direccion" [value]="pedido.direccion">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-3">
                     <label for="pedido_diasAlquiler"><strong>Dias alquiler</strong></label>
                     <div>
                         <input style="width:220px" type="text" readonly class="form-control-plaintext" id="pedido_diasAlquiler" [value]="pedido.dias_alquiler">
                     </div>
                 </div>
-                <div class="col">
-                    <label for="pedido_direccion"><strong>Fecha pedido</strong></label>
+                <div class="col-3">
+                    <label for="pedido_direccion"><strong>Fecha del pedido</strong></label>
                     <div>
                         <input style="width:220px" type="text" readonly class="form-control-plaintext" id="pedido_direccion" [value]="pedido.fecha_pedido|date: 'dd/MM/yyyy'">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-3">
                     <label for="pedido_direccion"><strong>Transporte</strong></label>
                     <div>
                         <input *ngIf="pedido.transporte" style="width:220px" type="text" readonly class="form-control-plaintext" id="pedido_direccion" value="SI">
                         <input *ngIf="!pedido.transporte" style="width:220px" type="text" readonly class="form-control-plaintext" id="pedido_direccion" value="NO">
                     </div>
                 </div>
-                <div class="col" *ngIf="pedido.valor_transporte">
-                    <label for="pedido_direccion"><strong>Valor Transporte</strong></label>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-3">
+                    <label for="p_fecha_entrega"><strong>Fecha entrega</strong></label>
                     <div>
-                        <input style="width:220px" type="text" readonly class="form-control-plaintext" id="pedido_direccion" [value]="pedido.valor_transporte | currency:'USD':'symbol-narrow':'.0-0'">
+                        <input style="width:220px" type="text" readonly class="form-control-plaintext" id="p_fecha_entrega" [value]="pedido.fecha_entrega | date: 'dd/MM/yyyy'">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label for="p_fecha_devolucion"><strong>Fecha devolucion</strong></label>
+                    <div>
+                        <input style="width:220px" type="text" readonly class="form-control-plaintext" id="p_fecha_devolucion" [value]="pedido.fecha_devolucion | date: 'dd/MM/yyyy'">
+                    </div>
+                </div>
+                <div class="col-3" *ngIf="pedido.valor_transporte">
+                    <label for="valor_transporte"><strong>Valor Transporte</strong></label>
+                    <div>
+                        <input style="width:220px" type="text" readonly class="form-control-plaintext" id="valor_transporte" [value]="pedido.valor_transporte | currency:'USD':'symbol-narrow':'.0-0'">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label for="valor_total"><strong>Valor Total</strong></label>
+                    <div>
+                        <input style="width:220px" type="text" readonly class="form-control-plaintext" id="valor_total" [value]="pedido.valor | currency:'USD':'symbol-narrow':'.0-0'">
                     </div>
                 </div>
             </div>
 
-
-
             <br>
-            <table class="table table-sm table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Valor</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="table-responsive-sm">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    <tr *ngFor="let p of productosPorPedido[i]; let j=index">
-                        <th>{{(j+1)}}</th>
-                        <td>{{p.producto.nombre}}</td>
-                        <td>{{p.cantidad}}</td>
-                        <td>{{p.valor|currency:'USD':'symbol-narrow':'.0-0'}}</td>
-                    </tr>
+                        <tr *ngFor="let p of productosPorPedido[i]; let j=index">
+                            <th>{{(j+1)}}</th>
+                            <td>{{p.producto.nombre}}</td>
+                            <td>{{p.cantidad}}</td>
+                            <td>{{p.valor|currency:'USD':'symbol-narrow':'.0-0'}}</td>
+                            <td>{{p.valor*p.cantidad|currency:'USD':'symbol-narrow':'.0-0'}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">TOTAL</th>
+                            <td *ngIf="pedido.valor_transporte">{{ (pedido.valor - pedido.valor_transporte ) / pedido.dias_alquiler |currency:'USD':'symbol-narrow':'.0-0'}}</td>
+                            <td *ngIf="!pedido.valor_transporte">{{ pedido.valor / pedido.dias_alquiler |currency:'USD':'symbol-narrow':'.0-0'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                </tbody>
-            </table>
+
+            </div>
 
         </div>
-        <div class="card-footer text-muted text-left">
+        <div class="card-footer text-muted">
             <button pButton type="button" icon="fa-edit" label="Editar" class="ui-button-primary"></button>
             <button pButton type="button" icon="fa-file-text" label="Exportar" class="ui-button-warning"></button>
+            <button pButton type="button" icon="fa-archive" label="Archivar" class="ui-button-danger" (click)="confirmArchivar(pedido)"></button>
         </div>
     </div>
     <br>
 </div>
+
+<div *ngIf="pedidosCliente.length===0">
+    No hay pedidos para mostrar
+</div>
+
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" [responsive]="true" width="300" #cd>
+    <p-footer>
+        <button type="button" pButton icon="fa-check" label="Si" (click)="cd.accept()" class="ui-button-danger"></button>
+        <button type="button" pButton icon="fa-close" label="No" (click)="cd.reject()"></button>
+    </p-footer>
+</p-confirmDialog>

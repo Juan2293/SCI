@@ -45,6 +45,7 @@ import {MensajesService} from "./services/mensajes.service";
 //rutas
 import { APP_ROUTING } from './app.routes';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { BuscarComponent } from './components/buscar/buscar.component';
 
 //pipes
 
@@ -58,7 +59,8 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     HomeComponent,
     ProductosComponent,
     FooterComponent,
-    SidebarComponent
+    SidebarComponent,
+    BuscarComponent
 
   ],
   imports: [

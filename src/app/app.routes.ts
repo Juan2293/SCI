@@ -4,6 +4,9 @@ import {PedidosComponent} from './components/pedidos/pedidos.component';
 import {PedidoComponent} from './components/pedido/pedido.component';
 import {HomeComponent} from './components/home/home.component';
 import {ProductosComponent} from './components/productos/productos.component';
+import { BuscarComponent } from './components/buscar/buscar.component';
+
+
 const APP_ROUTES: Routes = [
 
   { path: 'home', component: HomeComponent },
@@ -11,9 +14,10 @@ const APP_ROUTES: Routes = [
   { path: 'pedido', component: PedidoComponent },
   { path: 'productos', component: ProductosComponent },
   { path: 'pedidos/:nombreCliente/:clienteId', component: PedidosComponent },
+  {path: 'resultado/:termino', component: BuscarComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
-  //** cualquier cosa me redirecciona al home
+  // **  redirecciona al home cuando es link no es valido
 
 ];
 
-export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES, {useHash:true});
+export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES, {useHash: true});

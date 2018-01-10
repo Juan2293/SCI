@@ -24,7 +24,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input pInputText class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+            <input pInputText class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" #buscarTexto (keyup)="buscarCliente(buscarTexto.value)">
             <!-- <button type="button" class="btn btn-outline-primary">Buscar</button> -->
         </form>
     </div>
